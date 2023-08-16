@@ -13,9 +13,7 @@ fly launch \
   --no-deploy \
   --ha=false
 
-fly secrets set \
-  MINIO_ROOT_USER=minioroot \ 
-  MINIO_ROOT_PASSWORD=miniosecretpassword
+fly secrets set MINIO_ROOT_USER=minioroot MINIO_ROOT_PASSWORD=miniosecretpassword
 
 fly deploy
 ```
@@ -28,7 +26,7 @@ You will be asked an app name and organization. A 1GB volume will be created on 
 Use the Minio Console to create a bucket alias. The alias will be used to access the bucket via the fly.io domain.
 
 ```
-mc config host add fly-minio http://<YOUR-APP>.fly.dev:9000 minioroot miniosecretpassword
+mc config host add fly-minio https://<YOUR-APP>.fly.dev minioroot miniosecretpassword
 ```
 
 
@@ -43,7 +41,7 @@ mc anonymous set download fly-minio/public-bucket
 ## List files in your bucket
 
 ```
-mc ls fly-minio
+mc ls fly-minio/public-bucket
 ```
 
 
