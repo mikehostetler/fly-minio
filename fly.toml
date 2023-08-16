@@ -1,0 +1,51 @@
+[experimental]
+  cmd = ["server", "/data", "--console-address", ":12001"]
+  allowed_public_ports = [12001]
+
+[build]
+  image = "minio/minio:latest"
+
+[mounts]
+  source = "minio_data"
+  destination = "/data"
+
+[checks]
+  [checks.live]
+    port = 9000
+    type = "http"
+    interval = "5s"
+    timeout = "10s"
+    grace_period = "30s"
+    method = "get"
+    path = "/minio/health/live"
+  [checks.write]
+    port = 9000
+    type = "http"
+    interval = "30s"
+    timeout = "10s"
+    grace_period = "1s"
+    method = "get"
+    path = "/minio/health/cluster"
+  [checks.read]
+    port = 9000
+    type = "http"
+    interval = "30s"
+    timeout = "10s"
+    grace_period = "1s"
+    method = "get"
+    path = "/minio/health/cluster/read"
+
+[metrics]
+  port = 9091       
+  path = "/minio/v2/metrics/cluster" 
+
+[http_service]
+  internal_port = 9000
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  [http_service.concurrency]
+    type = "requests"
+    soft_limit = 200
+    hard_limit = 250
