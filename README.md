@@ -4,7 +4,7 @@ This repo contains a template to run [Minio](https://min.io/) on [Fly.io](https:
 
 ## Deploy
 
-To host uptime kuma on Fly.io clone this repo, enter the folder and run:
+To host minio on Fly.io clone this repo, enter the folder and run:
 
 ```
 fly launch \
